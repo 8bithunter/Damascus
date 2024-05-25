@@ -16,7 +16,7 @@ public class Funcs : MonoBehaviour
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = Complex.Pow(z, 2);
+        Complex output = LambertW(z);
 
         return (output / Scaler.scale);
     }
@@ -139,6 +139,27 @@ public class Funcs : MonoBehaviour
         }
 
         return (result * h / 3.0) * Scaler.scale;
+    }
+
+    public static Complex LambertW(Complex z, int maxIterations = 100, double tolerance = 1e-10)
+    {
+        if (z == Complex.Zero)
+            return Complex.Zero;
+
+        Complex w = z.Magnitude < 1 ? z : Complex.Log(z);
+
+        for (int i = 0; i < maxIterations; i++)
+        {
+            Complex ew = Complex.Exp(w);
+            Complex wew = w * ew;
+            Complex deltaW = (wew - z) / (ew * (w + 1) - (w + 2) * (wew - z) / (2 * w + 2));
+            w -= deltaW;
+
+            if (Complex.Abs(deltaW) < tolerance)
+                break;
+        }
+
+        return w;
     }
 }
 
