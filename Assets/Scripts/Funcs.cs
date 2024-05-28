@@ -11,12 +11,14 @@ public class Funcs : MonoBehaviour
     static int integrationnum = 10000;
     static double dx = 0.00000001;
     static bool actualintegral = false;
+    public Transform starti;
+    static Complex integrationstart;
 
     public static Complex function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = LambertW(z);
+        Complex output = Complex.Pow(z, 2);
 
         return (output / Scaler.scale);
     }
@@ -35,7 +37,7 @@ public class Funcs : MonoBehaviour
 
     public static Complex integrate(Complex end)
     {
-        Complex startpoint = Complex.Zero;
+        Complex startpoint = integrationstart;
         Complex endpoint = Complex.Zero;
         Complex antiresult = Complex.Zero;
 
@@ -124,7 +126,7 @@ public class Funcs : MonoBehaviour
 
     public static Complex SimpsonsRule(Complex end)
     {
-        Complex start = Complex.Zero;
+        Complex start = integrationstart;
         Complex h = (end - start) / integrationnum;
         Complex result = function(start) + function(end);
 
@@ -160,6 +162,11 @@ public class Funcs : MonoBehaviour
         }
 
         return w;
+    }
+
+    private void Update()
+    {
+        integrationstart = new Complex(starti.position.x, starti.position.y);
     }
 }
 

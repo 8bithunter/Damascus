@@ -18,21 +18,22 @@ public class Outputter : MonoBehaviour
     public Transform output;
     public Transform outputd;
     public Transform outputad;
+    public Transform starti;
 
     public TMP_Text inputvalue;
     public TMP_Text outputvalue;
     public TMP_Text dvalue;
     public TMP_Text ivalue;
+    public TMP_Text startivalue;
 
     void Update()
     {
-        float x = input.position.x;
-        float y = input.position.y;
 
-        Complex complexNumber = new Complex(x, y);
+        Complex complexNumber = new Complex(input.position.x, input.position.y);
         Complex result = Funcs.function(complexNumber);
         Complex derivative = new Complex(threshold - 1, threshold - 1);
         Complex antiderivative = new Complex(threshold - 1, threshold - 1);
+        Complex startinumber = new Complex(starti.position.x, starti.position.y);
 
         if (doderivative)
         {
@@ -75,6 +76,7 @@ public class Outputter : MonoBehaviour
         outputvalue.text = FormatComplexNumber(result, true);
         dvalue.text = FormatComplexNumber(derivative, doderivative);
         ivalue.text = FormatComplexNumber(antiderivative, dointegral);
+        startivalue.text = FormatComplexNumber(startinumber, dointegral);
     }
 
     public string FormatComplexNumber(Complex complexNumber, bool dothing)

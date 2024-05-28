@@ -7,7 +7,10 @@ using Vector3 = UnityEngine.Vector3;
 
 public class CursorFollow : MonoBehaviour
 {
-    public GameObject objectToMove; 
+    public GameObject objectToMove;
+    public GameObject output;
+    public GameObject starti;
+    bool isoutput = true;
     public float moveSpeed = 5f;
     public float arrowSpeed = 0.001f;
 
@@ -19,9 +22,16 @@ public class CursorFollow : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            objectToMove = isoutput ? starti : output;
+            isoutput = !isoutput;
+        }
+
         if (Input.GetKey(KeyCode.Return))
         {
-            objectToMove.transform.position = new Vector3(0, 0, 0);
+            output.transform.position = new Vector3(0, 0, 0);
+            starti.transform.position = new Vector3(0, 0, 0);
             Scaler.scale = 1;
         }
 
