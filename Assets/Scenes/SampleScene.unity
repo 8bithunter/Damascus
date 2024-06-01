@@ -2991,6 +2991,7 @@ GameObject:
   - component: {fileID: 1107804551}
   - component: {fileID: 1107804552}
   - component: {fileID: 1107804553}
+  - component: {fileID: 1107804554}
   m_Layer: 0
   m_Name: Code
   m_TagString: Untagged
@@ -3123,6 +3124,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starti: {fileID: 1217521755}
+--- !u!114 &1107804554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107804547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6573d12e8341b4a9ee00de5ca78290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doHeatMap: 1
+  squareSprite: {fileID: 7482667652216324306, guid: 38e6c4fbce2370248a09c380fba96b1f, type: 3}
+  opacity: 0.3
+  squareSize: 0.1
 --- !u!1 &1217521754
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,7 +3633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0.21176471, a: 1}
+  m_Color: {r: 0, g: 0.21176471, b: 0.03984624, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
