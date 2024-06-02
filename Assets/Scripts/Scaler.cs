@@ -48,13 +48,13 @@ public class Scaler : MonoBehaviour
             BoundedScale(scale * 2);
         }
 
-        //Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
-        //Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
+        Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
+        Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
 
         posr.text = Math.Round(3 * scale, 1).ToString("0.0");
         negr.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
-        posi.text = Math.Round(3 * scale, 1).ToString("0.0");
-        negi.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
+        posi.text = Math.Round(3 * scale, 1).ToString("0.0") + "i";
+        negi.text = (-Math.Round(3 * scale, 1)).ToString("0.0") + "i";
     }
 
     public void BoundedScale(double scaleinput)

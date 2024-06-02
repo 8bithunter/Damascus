@@ -910,7 +910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Input
+  m_text: Output
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3057,7 +3057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -27, y: 322.1}
+  m_AnchoredPosition: {x: -30.24, y: 322.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &884076702
@@ -3255,11 +3255,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1107804549}
   - component: {fileID: 1107804548}
+  - component: {fileID: 1107804554}
   - component: {fileID: 1107804550}
   - component: {fileID: 1107804551}
   - component: {fileID: 1107804552}
   - component: {fileID: 1107804553}
-  - component: {fileID: 1107804554}
   m_Layer: 0
   m_Name: Code
   m_TagString: Untagged
@@ -3312,8 +3312,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threshold: 1000
-  doderivative: 1
-  dointegral: 1
+  doderivative: 0
+  dointegral: 0
   input: {fileID: 692663411}
   output: {fileID: 272705412}
   outputd: {fileID: 335685693}
@@ -3408,10 +3408,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6573d12e8341b4a9ee00de5ca78290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doHeatMap: 0
+  doHeatMap: 1
   squareSprite: {fileID: 7482667652216324306, guid: 38e6c4fbce2370248a09c380fba96b1f, type: 3}
-  opacity: 0.32
+  opacity: 0.7
   squareSize: 0.2
+  calibrationDistance: 4
+  zeroColorPower: 25
+  realColor: {r: 1, g: 0, b: 0, a: 1}
+  imagColor: {r: 0, g: 1, b: 0, a: 1}
+  zeroColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!1 &1217521754
 GameObject:
   m_ObjectHideFlags: 0
@@ -3534,7 +3539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -27, y: -322}
+  m_AnchoredPosition: {x: -30.24, y: -322}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1217934906
@@ -3779,7 +3784,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Input
+  m_text: Output
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4389,7 +4394,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: output
+  m_text: Output
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

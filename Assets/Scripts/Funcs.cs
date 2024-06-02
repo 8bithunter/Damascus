@@ -18,7 +18,7 @@ public class Funcs : MonoBehaviour
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = Gamma(z);
+        Complex output = Mandelbrot(z);
 
         return (output / Scaler.scale);
     }
