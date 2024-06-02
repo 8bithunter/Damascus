@@ -5,6 +5,7 @@ using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class HeatMap : MonoBehaviour
 {
@@ -29,6 +30,14 @@ public class HeatMap : MonoBehaviour
         CreateHeatMap();
         UpdateHeatMap();
     }
+    private long frameCount = 0;
+    private void Update()
+    {
+        frameCount++;
+
+        if (frameCount % 5 == 0) 
+            UpdateHeatMap();
+    }
     public void CreateHeatMap()
     {
         if (doHeatMap)
@@ -52,7 +61,7 @@ public class HeatMap : MonoBehaviour
 
                     Complex functionOutput = Funcs.function(new Complex(position.x, position.y));
 
-                    if (x > -4 / squareSize && x < 4 / squareSize && y > -4 / squareSize && y < 4 / squareSize)
+                    if (position.x > -4 && position.x < 4 && position.y > -4 && position.y < 4)
                     {
                         if (functionOutput.Real < lowReal) lowReal = functionOutput.Real;
                         if (functionOutput.Real > HighReal) HighReal = functionOutput.Real;
@@ -77,7 +86,9 @@ public class HeatMap : MonoBehaviour
 
                 SpriteRenderer spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
 
-                Color color = ComplexToColor(Funcs.function(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y)));
+                Complex functionOutput = Funcs.function(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y));
+
+                Color color = ComplexToColor(functionOutput);
 
                 spriteRenderer.color = color;
             }
@@ -98,7 +109,7 @@ public class HeatMap : MonoBehaviour
         if (value.Imaginary < lowImag) normalizedImaginary = 0;
 
         float red = Mathf.Lerp(0f, 1f, normalizedReal);
-        float green = 0;
+        float green = Mathf.Lerp(0f, 1f, 0); 
         float blue = Mathf.Lerp(0f, 1f, normalizedImaginary);
 
         return new Color(normalizedReal, green, normalizedImaginary, opacity);

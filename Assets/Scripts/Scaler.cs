@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using System;
 
 public class Scaler : MonoBehaviour
 {
@@ -15,6 +17,11 @@ public class Scaler : MonoBehaviour
     private float orginalscale2;
 
     private HeatMap heatmap;
+
+    public TMP_Text posr;
+    public TMP_Text negr;
+    public TMP_Text posi;
+    public TMP_Text negi;
 
     void Start()
     {
@@ -43,6 +50,11 @@ public class Scaler : MonoBehaviour
 
         Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
         Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
+
+        posr.text = Math.Round(3 * scale, 1).ToString("0.0");
+        negr.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
+        posi.text = Math.Round(3 * scale, 1).ToString("0.0");
+        negi.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
     }
 
     public void BoundedScale(double scaleinput)

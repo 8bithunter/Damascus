@@ -18,7 +18,7 @@ public class Funcs : MonoBehaviour
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = z * z;
+        Complex output = Complex.Cos(z);
 
         return (output / Scaler.scale);
     }
