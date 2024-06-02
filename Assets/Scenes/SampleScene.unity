@@ -3138,7 +3138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doHeatMap: 1
   squareSprite: {fileID: 7482667652216324306, guid: 38e6c4fbce2370248a09c380fba96b1f, type: 3}
-  opacity: 0.3
+  opacity: 0.32
   squareSize: 0.1
 --- !u!1 &1217521754
 GameObject:
