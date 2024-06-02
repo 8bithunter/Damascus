@@ -43,6 +43,11 @@ public class Outputter : MonoBehaviour
         if (dointegral)
         {
             antiderivative = Funcs.SimpsonsRule(complexNumber);
+            starti.gameObject.SetActive(true);
+        }
+        else
+        {
+            starti.gameObject.SetActive(false);
         }
 
         if ((result.Real < threshold && result.Imaginary < threshold) && (result.Real > -threshold && result.Imaginary > -threshold))

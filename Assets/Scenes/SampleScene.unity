@@ -3408,7 +3408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d6573d12e8341b4a9ee00de5ca78290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doHeatMap: 1
+  doHeatMap: 0
   squareSprite: {fileID: 7482667652216324306, guid: 38e6c4fbce2370248a09c380fba96b1f, type: 3}
   opacity: 0.32
   squareSize: 0.2

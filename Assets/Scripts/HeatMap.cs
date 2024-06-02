@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 public class HeatMap : MonoBehaviour
 {
     public bool doHeatMap = true;
+    private bool heatMapGone = false;
 
     public Sprite squareSprite; 
     public float opacity = 1f; 
@@ -17,6 +18,7 @@ public class HeatMap : MonoBehaviour
     private int screenLength = 9;
     private int screenHeight = 5;
 
+    public double calibrationDistance = 4;
     double lowReal = double.MaxValue;
     double HighReal = double.MinValue;
     double lowImag = double.MaxValue;
@@ -27,70 +29,100 @@ public class HeatMap : MonoBehaviour
 
     void Start()
     {
+        spriteObjects = new GameObject[(int)Math.Round(screenLength / squareSize) * 2 + 1, (int)Math.Round(screenHeight / squareSize) * 2 + 1];
         CreateHeatMap();
         UpdateHeatMap();
     }
     private long frameCount = 0;
     private void Update()
     {
-        frameCount++;
 
-        if (frameCount % 5 == 0) 
-            UpdateHeatMap();
+        if (doHeatMap && heatMapGone)
+        {
+            heatMapGone = false;
+        }
+
+        if(!doHeatMap && !heatMapGone)
+        {
+            DistroyHeatMap();
+            heatMapGone = true;
+        }
+
+        if (doHeatMap)
+        {
+            frameCount++;
+
+            if (frameCount % 5 == 0)
+                UpdateHeatMap();
+        }
     }
     public void CreateHeatMap()
     {
-        if (doHeatMap)
+        for (int x = -(int)Math.Round(screenLength / squareSize); x <= (int)Math.Round(screenLength / squareSize); x++)
         {
-            spriteObjects = new GameObject[(int)Math.Round(screenLength / squareSize) * 2 + 1, (int)Math.Round(screenHeight / squareSize) * 2 + 1];
-            for (int x = -(int)Math.Round(screenLength / squareSize); x <= (int)Math.Round(screenLength / squareSize); x++)
+            for (int y = -(int)Math.Round(screenHeight / squareSize); y <= (int)Math.Round(screenHeight / squareSize); y++)
             {
-                for (int y = -(int)Math.Round(screenHeight / squareSize); y <= (int)Math.Round(screenHeight / squareSize); y++)
+                GameObject spriteObject = new GameObject("Tile_" + x + "_" + y);
+
+                SpriteRenderer spriteRenderer = spriteObject.AddComponent<SpriteRenderer>();
+
+                spriteRenderer.sprite = squareSprite;
+
+                Vector3 position = new Vector3(x * squareSize, y * squareSize, 0);
+
+                spriteObject.transform.position = position;
+
+                spriteObject.transform.localScale = new Vector3(squareSize, squareSize, 1f);
+
+                Complex functionOutput = Funcs.function(new Complex(position.x, position.y));
+
+                if (position.x > -calibrationDistance && position.x < calibrationDistance && position.y > -calibrationDistance && position.y < calibrationDistance)
                 {
-                    GameObject spriteObject = new GameObject("Tile_" + x + "_" + y);
-
-                    SpriteRenderer spriteRenderer = spriteObject.AddComponent<SpriteRenderer>();
-
-                    spriteRenderer.sprite = squareSprite;
-
-                    Vector3 position = new Vector3(x * squareSize, y * squareSize, 0);
-
-                    spriteObject.transform.position = position;
-
-                    spriteObject.transform.localScale = new Vector3(squareSize, squareSize, 1f);
-
-                    Complex functionOutput = Funcs.function(new Complex(position.x, position.y));
-
-                    if (position.x > -4 && position.x < 4 && position.y > -4 && position.y < 4)
-                    {
-                        if (functionOutput.Real < lowReal) lowReal = functionOutput.Real;
-                        if (functionOutput.Real > HighReal) HighReal = functionOutput.Real;
-                        if (functionOutput.Imaginary < lowImag) lowImag = functionOutput.Imaginary;
-                        if (functionOutput.Imaginary > HighImag) HighImag = functionOutput.Imaginary;
-                        if (Complex.Abs(functionOutput) > HighMag) HighMag = Complex.Abs(functionOutput);
-                    }
-
-                    spriteObjects[x + (int)Math.Round(screenLength / squareSize), y + (int)Math.Round(screenHeight / squareSize)] = spriteObject;
+                    if (functionOutput.Real < lowReal) lowReal = functionOutput.Real;
+                    if (functionOutput.Real > HighReal) HighReal = functionOutput.Real;
+                    if (functionOutput.Imaginary < lowImag) lowImag = functionOutput.Imaginary;
+                    if (functionOutput.Imaginary > HighImag) HighImag = functionOutput.Imaginary;
+                    if (Complex.Abs(functionOutput) > HighMag) HighMag = Complex.Abs(functionOutput);
                 }
+
+                spriteObjects[x + (int)Math.Round(screenLength / squareSize), y + (int)Math.Round(screenHeight / squareSize)] = spriteObject;
             }
         }
     }
 
     public void UpdateHeatMap()
     {
+        if (doHeatMap)
+        {
+            for (int x = 0; x < (int)Math.Round(screenLength / squareSize) * 2 + 1; x++)
+            {
+                for (int y = 0; y < (int)Math.Round(screenHeight / squareSize) * 2 + 1; y++)
+                {
+                    GameObject spriteObject = spriteObjects[x, y];
+
+                    SpriteRenderer spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
+
+                    Complex functionOutput = Funcs.function(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y));
+
+                    Color color = ComplexToColor(functionOutput);
+
+                    spriteRenderer.color = color;
+                }
+            }
+        }
+    }
+
+    public void DistroyHeatMap()
+    {
         for (int x = 0; x < (int)Math.Round(screenLength / squareSize) * 2 + 1; x++)
         {
             for (int y = 0; y < (int)Math.Round(screenHeight / squareSize) * 2 + 1; y++)
             {
-                GameObject spriteObject = spriteObjects[x, y];
+                 GameObject spriteObject = spriteObjects[x, y];
 
-                SpriteRenderer spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
+                 SpriteRenderer spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
 
-                Complex functionOutput = Funcs.function(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y));
-
-                Color color = ComplexToColor(functionOutput);
-
-                spriteRenderer.color = color;
+                 spriteRenderer.color = new Color (0, 0, 0, 0);
             }
         }
     }

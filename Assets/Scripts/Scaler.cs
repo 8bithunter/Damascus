@@ -7,6 +7,8 @@ using System;
 public class Scaler : MonoBehaviour
 {
     public static double scale = 1;
+    private double minScale = 0.1;
+    private double maxScale = 10;
 
     public RectTransform Unitcircle1;
     public RectTransform Unitcircle2;
@@ -40,16 +42,14 @@ public class Scaler : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Equals) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))))
         {
             BoundedScale(scale * 0.5);
-            heatmap.CreateHeatMap();
         }
         else if ((Input.GetKeyDown(KeyCode.Minus) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))))
         {
             BoundedScale(scale * 2);
-            heatmap.CreateHeatMap();
         }
 
-        Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
-        Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
+        //Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
+        //Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
 
         posr.text = Math.Round(3 * scale, 1).ToString("0.0");
         negr.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
@@ -59,9 +59,17 @@ public class Scaler : MonoBehaviour
 
     public void BoundedScale(double scaleinput)
     {
-        if (scaleinput >= 0.25 && scaleinput <= 4)
+        if (scaleinput >= minScale && scaleinput <= maxScale)
         {
             scale = scaleinput;
+        }
+        else if (scaleinput < minScale)
+        {
+            scale = minScale;
+        }
+        else if (scaleinput > maxScale)
+        {
+            scale = maxScale;
         }
     }
 }
