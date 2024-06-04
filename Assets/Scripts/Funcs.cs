@@ -18,7 +18,7 @@ public class Funcs : MonoBehaviour
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = Mandelbrot(z);
+        Complex output = Complex.Sin(z);
 
         return (output / Scaler.scale);
     }

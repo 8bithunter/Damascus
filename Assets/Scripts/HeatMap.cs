@@ -6,6 +6,8 @@ using Vector3 = UnityEngine.Vector3;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using System.Drawing;
+using Color = UnityEngine.Color;
 
 public class HeatMap : MonoBehaviour
 {
@@ -14,9 +16,10 @@ public class HeatMap : MonoBehaviour
 
     public Sprite squareSprite; 
     public float opacity = 1f; 
-    public float squareSize = 1f; 
-    private int screenLength = 9;
-    private int screenHeight = 5;
+    public float squareSize = 1f;
+    private float tempSquareSize;
+    private uint screenLength = 9;
+    private uint screenHeight = 5;
 
     public double calibrationDistance = 4;
     double lowReal = double.MaxValue;
@@ -32,6 +35,9 @@ public class HeatMap : MonoBehaviour
     public Color realColor = Color.red;
     public Color imagColor = Color.green;
     public Color zeroColor = Color.blue;
+    public bool DoRGB = false;
+    public bool HSVZeroWhite = false;
+    public double offsetDegrees;
 
     void Start()
     {
@@ -42,6 +48,7 @@ public class HeatMap : MonoBehaviour
     private long frameCount = 0;
     private void Update()
     {
+        if (squareSize <= 0) squareSize = 0.1f;
 
         if (doHeatMap && heatMapGone)
         {
@@ -71,6 +78,8 @@ public class HeatMap : MonoBehaviour
     }
     public void CreateHeatMap()
     {
+        tempSquareSize = squareSize;
+
         for (int x = -(int)Math.Round(screenLength / squareSize); x <= (int)Math.Round(screenLength / squareSize); x++)
         {
             for (int y = -(int)Math.Round(screenHeight / squareSize); y <= (int)Math.Round(screenHeight / squareSize); y++)
@@ -107,9 +116,9 @@ public class HeatMap : MonoBehaviour
     {
         if (doHeatMap)
         {
-            for (int x = 0; x < (int)Math.Round(screenLength / squareSize) * 2 + 1; x++)
+            for (int x = 0; x < (int)Math.Round(screenLength / tempSquareSize) * 2 + 1; x++)
             {
-                for (int y = 0; y < (int)Math.Round(screenHeight / squareSize) * 2 + 1; y++)
+                for (int y = 0; y < (int)Math.Round(screenHeight / tempSquareSize) * 2 + 1; y++)
                 {
                     GameObject spriteObject = spriteObjects[x, y];
 
@@ -142,9 +151,9 @@ public class HeatMap : MonoBehaviour
 
     public void DistroyHeatMap()
     {
-        for (int x = 0; x < (int)Math.Round(screenLength / squareSize) * 2 + 1; x++)
+        for (int x = 0; x < (int)Math.Round(screenLength / tempSquareSize) * 2 + 1; x++)
         {
-            for (int y = 0; y < (int)Math.Round(screenHeight / squareSize) * 2 + 1; y++)
+            for (int y = 0; y < (int)Math.Round(screenHeight / tempSquareSize) * 2 + 1; y++)
             {
                 GameObject spriteObject = spriteObjects[x, y];
 
@@ -155,6 +164,10 @@ public class HeatMap : MonoBehaviour
             }
         }
 
+        tempSquareSize = squareSize;
+
+        spriteObjects = new GameObject[(int)Math.Round(screenLength / squareSize) * 2 + 1, (int)Math.Round(screenHeight / squareSize) * 2 + 1];
+
         lowReal = double.MaxValue;
         HighReal = double.MinValue;
         lowImag = double.MaxValue;
@@ -164,7 +177,12 @@ public class HeatMap : MonoBehaviour
 
     Color ComplexToColor(Complex value)
     { 
-        float magnitude = (float) Complex.Abs(value);
+        return DoRGB ? ComplexToRGB(value) : ComplexToHSV(value);
+    }
+
+    Color ComplexToRGB(Complex value)
+    {
+        float magnitude = (float)Complex.Abs(value);
         float closeZero = Mathf.InverseLerp(0, (float)HighMag, magnitude);
         if (magnitude > HighMag) closeZero = 1;
 
@@ -183,6 +201,7 @@ public class HeatMap : MonoBehaviour
         if (actualCloseZero > opacity)
         {
             currentOpacity = actualCloseZero;
+            if (currentOpacity > 0.9) currentOpacity = 0.9f;
         }
         realScale -= actualCloseZero / 2;
         imagScale -= actualCloseZero / 2;
@@ -192,6 +211,37 @@ public class HeatMap : MonoBehaviour
         Color color3 = ScaleColor(zeroColor, actualCloseZero);
 
         return AverageColor(color1, color2, color3, currentOpacity);
+    }
+
+    Color ComplexToHSV(Complex value)
+    {
+        double angleRadians = Math.Atan2(value.Imaginary, value.Real);
+
+        double angleDegrees = angleRadians * (180 / Math.PI);
+
+        angleDegrees = (angleDegrees + 360 + offsetDegrees) % 360;
+
+        float hue = (float)(angleDegrees / 360.0);
+
+        float magnitude = (float)Complex.Abs(value);
+        float s = Mathf.InverseLerp(0, (float)HighMag, magnitude);
+        if (magnitude > HighMag) s = 1;
+        float actualS = Mathf.Sqrt(s);
+        float v;
+        if (!HSVZeroWhite)
+        {
+            v = 1 - Mathf.Pow((1 - s), zeroColorPower);
+            if (v > 0.5) v = 0.5f;
+        }
+        else
+        {
+            v = Mathf.Pow((1 - s), zeroColorPower);
+            if (v < 0.5) v = 0.5f;
+        }
+
+        Color color = Color.HSVToRGB(hue, actualS, v);
+        color.a = opacity;
+        return color;
     }
 
     Color ScaleColor(Color color, float scaleValue)
