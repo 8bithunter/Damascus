@@ -8,17 +8,24 @@ using UnityEngine.UI;
 
 public class Funcs : MonoBehaviour
 {
-    static int integrationnum = 10000;
-    static double dx = 0.00000001;
-    static bool actualintegral = false;
+    public static double dx = 0.00000001;
+    public static int integrationResolution = 1000;
     public Transform starti;
+
+    static bool actualintegral = false;
+    
     static Complex integrationstart;
+
+    private void Update()
+    {
+        integrationstart = new Complex(starti.position.x, starti.position.y);
+    }
 
     public static Complex function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = 1 / Complex.Sin(z);
+        Complex output = Complex.Sin(z) - 1.5;
 
         return (output / Scaler.scale);
     }
@@ -35,7 +42,7 @@ public class Funcs : MonoBehaviour
         return new Complex(df_dx, df_dy) / Scaler.scale;
     }
 
-    public static Complex integrate(Complex end)
+    public static Complex RiemannSum(Complex end)
     {
         Complex startpoint = integrationstart;
         Complex endpoint = Complex.Zero;
@@ -61,15 +68,34 @@ public class Funcs : MonoBehaviour
             endpoint = end;
         }
 
-        Complex deltaZ = (endpoint - startpoint) / integrationnum;
+        Complex deltaZ = (endpoint - startpoint) / integrationResolution;
 
-        for (int i = 0; i < integrationnum; i++)
+        for (int i = 0; i < integrationResolution; i++)
         {
             Complex z = startpoint + deltaZ * i;
             Complex f_z = function(z);
             antiresult += f_z * deltaZ;
         }
         return (antiresult * Scaler.scale);
+    }
+
+    public static Complex SimpsonsRule(Complex end)
+    {
+        Complex start = integrationstart;
+        Complex h = (end - start) / integrationResolution;
+        Complex result = function(start) + function(end);
+
+        for (int i = 1; i < integrationResolution; i += 2)
+        {
+            result += 4 * function(start + i * h);
+        }
+
+        for (int i = 2; i < integrationResolution - 1; i += 2)
+        {
+            result += 2 * function(start + i * h);
+        }
+
+        return (result * h / 3.0) * Scaler.scale;
     }
 
     public static Complex Mandelbrot(Complex z)
@@ -82,7 +108,7 @@ public class Funcs : MonoBehaviour
         return output;
     }
 
-    public static Complex Riemann(Complex z)
+    public static Complex Zeta(Complex z)
     {
         if (z.Real >= 0.5)
         {
@@ -96,7 +122,7 @@ public class Funcs : MonoBehaviour
         else
         {
             Complex output = Complex.Pow(2, z) * Complex.Pow(Math.PI, z - 1);
-            return (output * Complex.Sin((Math.PI * z) / 2) * Gamma(1 - z) * Riemann(1 - z));
+            return (output * Complex.Sin((Math.PI * z) / 2) * Gamma(1 - z) * Zeta(1 - z));
         }
     }
 
@@ -124,25 +150,6 @@ public class Funcs : MonoBehaviour
         }
     }
 
-    public static Complex SimpsonsRule(Complex end)
-    {
-        Complex start = integrationstart;
-        Complex h = (end - start) / integrationnum;
-        Complex result = function(start) + function(end);
-
-        for (int i = 1; i < integrationnum; i += 2)
-        {
-            result += 4 * function(start + i * h);
-        }
-
-        for (int i = 2; i < integrationnum - 1; i += 2)
-        {
-            result += 2 * function(start + i * h);
-        }
-
-        return (result * h / 3.0) * Scaler.scale;
-    }
-
     public static Complex LambertW(Complex z, int maxIterations = 100, double tolerance = 1e-10)
     {
         if (z == Complex.Zero) return Complex.Zero;
@@ -161,11 +168,6 @@ public class Funcs : MonoBehaviour
         }
 
         return w;
-    }
-
-    private void Update()
-    {
-        integrationstart = new Complex(starti.position.x, starti.position.y);
     }
 }
 

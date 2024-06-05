@@ -14,6 +14,7 @@ public class HeatMap : MonoBehaviour
     public bool doHeatMap = true;
     public bool derivativeHeatMap = false;
     public bool integralHeatMap = false;
+
     private bool heatMapGone = false;
 
     public Sprite squareSprite; 
@@ -24,22 +25,23 @@ public class HeatMap : MonoBehaviour
     private uint screenHeight = 5;
 
     public double calibrationDistance = 4;
-    double lowReal = double.MaxValue;
-    double HighReal = double.MinValue;
-    double lowImag = double.MaxValue;
-    double HighImag = double.MinValue;
-    double HighMag = double.MinValue;
-
-    GameObject[,] spriteObjects;
+    private double lowReal = double.MaxValue;
+    private double HighReal = double.MinValue;
+    private double lowImag = double.MaxValue;
+    private double HighImag = double.MinValue;
+    private double HighMag = double.MinValue;
 
     public int zeroColorPower = 25;
 
+    public bool HSVZeroWhite = false;
+    public double offsetDegrees;
+
+    public bool DoRGB = false;
     public Color realColor = Color.red;
     public Color imagColor = Color.green;
     public Color zeroColor = Color.blue;
-    public bool DoRGB = false;
-    public bool HSVZeroWhite = false;
-    public double offsetDegrees;
+
+    private GameObject[,] spriteObjects;
 
     void Start()
     {
@@ -67,7 +69,7 @@ public class HeatMap : MonoBehaviour
         {
             frameCount++;
 
-            if (frameCount % 5 == 0)
+            if (frameCount % 10 == 0)
                 UpdateHeatMap();
         }
 
