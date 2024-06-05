@@ -12,6 +12,8 @@ using Color = UnityEngine.Color;
 public class HeatMap : MonoBehaviour
 {
     public bool doHeatMap = true;
+    public bool derivativeHeatMap = false;
+    public bool integralHeatMap = false;
     private bool heatMapGone = false;
 
     public Sprite squareSprite; 
@@ -76,6 +78,13 @@ public class HeatMap : MonoBehaviour
             UpdateHeatMap();
         }
     }
+
+    public Complex HeatMapFunction(Complex value)
+    {
+        if (derivativeHeatMap) return Funcs.Derivative(value);
+        else if (integralHeatMap) return Funcs.SimpsonsRule(value);
+        else return Funcs.function(value);    
+    }
     public void CreateHeatMap()
     {
         tempSquareSize = squareSize;
@@ -96,7 +105,7 @@ public class HeatMap : MonoBehaviour
 
                 spriteObject.transform.localScale = new Vector3(squareSize, squareSize, 1f);
 
-                Complex functionOutput = Funcs.function(new Complex(position.x, position.y));
+                Complex functionOutput = HeatMapFunction(new Complex(position.x, position.y));
 
                 if (position.x > -calibrationDistance && position.x < calibrationDistance && position.y > -calibrationDistance && position.y < calibrationDistance)
                 {
@@ -124,7 +133,7 @@ public class HeatMap : MonoBehaviour
 
                     SpriteRenderer spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
 
-                    Complex functionOutput = Funcs.function(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y));
+                    Complex functionOutput = HeatMapFunction(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y));
 
                     Color color = ComplexToColor(functionOutput);
 

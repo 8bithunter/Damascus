@@ -18,7 +18,7 @@ public class Funcs : MonoBehaviour
     {
         Complex z = unscaledz * Scaler.scale;
 
-        Complex output = Complex.Sin(z);
+        Complex output = 1 / Complex.Sin(z);
 
         return (output / Scaler.scale);
     }
@@ -145,8 +145,7 @@ public class Funcs : MonoBehaviour
 
     public static Complex LambertW(Complex z, int maxIterations = 100, double tolerance = 1e-10)
     {
-        if (z == Complex.Zero)
-            return Complex.Zero;
+        if (z == Complex.Zero) return Complex.Zero;
 
         Complex w = z.Magnitude < 1 ? z : Complex.Log(z);
 

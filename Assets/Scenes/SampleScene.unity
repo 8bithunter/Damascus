@@ -3409,6 +3409,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doHeatMap: 1
+  derivativeHeatMap: 0
+  integralHeatMap: 0
   squareSprite: {fileID: 7482667652216324306, guid: 38e6c4fbce2370248a09c380fba96b1f, type: 3}
   opacity: 0.7
   squareSize: 0.2
