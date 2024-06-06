@@ -16,6 +16,12 @@ public class Funcs : MonoBehaviour
     
     static Complex integrationstart;
 
+    public static Matrix matrix;
+
+    public void Start()
+    {
+        matrix = GetComponent<Matrix>();
+    }
     private void Update()
     {
         integrationstart = new Complex(starti.position.x, starti.position.y);
@@ -24,8 +30,16 @@ public class Funcs : MonoBehaviour
     public static Complex function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
+        Complex output;
 
-        Complex output = Complex.Sin(z) - 1.5;
+        if (!matrix.matrixMode)
+        {
+            output = Complex.FromPolarCoordinates(z.Real, z.Imaginary);
+        }
+        else
+        {
+            output = matrix.Transform(z);
+        }
 
         return (output / Scaler.scale);
     }

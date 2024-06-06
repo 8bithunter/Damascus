@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,6 +26,12 @@ public class Outputter : MonoBehaviour
     public TMP_Text ivalue;
     public TMP_Text startivalue;
 
+    public Matrix matrix;
+
+    private void Start()
+    {
+        matrix = GetComponent<Matrix>();
+    }
     void Update()
     {
 
@@ -100,22 +106,44 @@ public class Outputter : MonoBehaviour
             return "Too Big!";
         }
         else
-        { 
-            if (complexNumber.Real >= 0 && complexNumber.Imaginary >= 0)
+        {
+            if (!matrix.matrixMode)
             {
-                formattedNumber = $"{realPart} + {imagPart}i";
-            }
-            else if (complexNumber.Real >= 0 && complexNumber.Imaginary < 0)
-            {
-                formattedNumber = $"{realPart} - {imagPart}i";
-            }
-            else if (complexNumber.Real < 0 && complexNumber.Imaginary >= 0)
-            {
-                formattedNumber = $"-{realPart} + {imagPart}i";
+                if (complexNumber.Real >= 0 && complexNumber.Imaginary >= 0)
+                {
+                    formattedNumber = $"{realPart} + {imagPart}i";
+                }
+                else if (complexNumber.Real >= 0 && complexNumber.Imaginary < 0)
+                {
+                    formattedNumber = $"{realPart} - {imagPart}i";
+                }
+                else if (complexNumber.Real < 0 && complexNumber.Imaginary >= 0)
+                {
+                    formattedNumber = $"-{realPart} + {imagPart}i";
+                }
+                else
+                {
+                    formattedNumber = $"-{realPart} - {imagPart}i";
+                }
             }
             else
             {
-                formattedNumber = $"-{realPart} - {imagPart}i";
+                if (complexNumber.Real >= 0 && complexNumber.Imaginary >= 0)
+                {
+                    formattedNumber = $"{realPart} î + {imagPart} ĵ";
+                }
+                else if (complexNumber.Real >= 0 && complexNumber.Imaginary < 0)
+                {
+                    formattedNumber = $"{realPart} î - {imagPart} ĵ";
+                }
+                else if (complexNumber.Real < 0 && complexNumber.Imaginary >= 0)
+                {
+                    formattedNumber = $"-{realPart} î + {imagPart} ĵ";
+                }
+                else
+                {
+                    formattedNumber = $"-{realPart} î - {imagPart} ĵ";
+                }
             }
             return formattedNumber;
         }

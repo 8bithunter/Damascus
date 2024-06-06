@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\HeatMap.cs" />
     <Compile Include="Assets\Scripts\Setter.cs" />
+    <Compile Include="Assets\Scripts\Matrix.cs" />
     <Compile Include="Assets\Scripts\CursorFollow.cs" />
     <Compile Include="Assets\Scripts\Funcs.cs" />
     <Compile Include="Assets\Scripts\Scaler.cs" />

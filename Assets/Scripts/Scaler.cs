@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,6 +19,7 @@ public class Scaler : MonoBehaviour
     private float orginalscale2;
 
     private HeatMap heatmap;
+    private Matrix matrix;
 
     public TMP_Text posr;
     public TMP_Text negr;
@@ -31,6 +32,7 @@ public class Scaler : MonoBehaviour
         orginalscale2 = Unitcircle2.localScale.x;
 
         heatmap = GetComponent<HeatMap>();
+        matrix = GetComponent<Matrix>();
     }
 
     void Update()
@@ -51,10 +53,20 @@ public class Scaler : MonoBehaviour
         Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
         Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
 
-        posr.text = Math.Round(3 * scale, 1).ToString("0.0");
-        negr.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
-        posi.text = Math.Round(3 * scale, 1).ToString("0.0") + "i";
-        negi.text = (-Math.Round(3 * scale, 1)).ToString("0.0") + "i";
+        if (!matrix.matrixMode)
+        {
+            posr.text = Math.Round(3 * scale, 1).ToString("0.0");
+            negr.text = (-Math.Round(3 * scale, 1)).ToString("0.0");
+            posi.text = Math.Round(3 * scale, 1).ToString("0.0") + "i";
+            negi.text = (-Math.Round(3 * scale, 1)).ToString("0.0") + "i";
+        }
+        else
+        {
+            posr.text = Math.Round(3 * scale, 1).ToString("0.0") + " î";
+            negr.text = (-Math.Round(3 * scale, 1)).ToString("0.0") + " î";
+            posi.text = Math.Round(3 * scale, 1).ToString("0.0") + " ĵ";
+            negi.text = (-Math.Round(3 * scale, 1)).ToString("0.0") + " ĵ";
+        }
     }
 
     public void BoundedScale(double scaleinput)
