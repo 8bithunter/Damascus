@@ -10,15 +10,11 @@ public class Scaler : MonoBehaviour
     private double minScale = 0.1;
     private double maxScale = 10;
 
-    public RectTransform Unitcircle1;
-    public RectTransform Unitcircle2;
-
     public GameObject input;
 
     private float orginalscale1;
     private float orginalscale2;
 
-    private HeatMap heatmap;
     private Matrix matrix;
 
     public TMP_Text posr;
@@ -28,10 +24,6 @@ public class Scaler : MonoBehaviour
 
     void Start()
     {
-        orginalscale1 = Unitcircle1.localScale.x;
-        orginalscale2 = Unitcircle2.localScale.x;
-
-        heatmap = GetComponent<HeatMap>();
         matrix = GetComponent<Matrix>();
     }
 
@@ -49,9 +41,6 @@ public class Scaler : MonoBehaviour
         {
             BoundedScale(scale * 2);
         }
-
-        Unitcircle2.localScale = new Vector3(orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale2 - orginalscale1 + 11), orginalscale2 / (float)scale + (float)(orginalscale1 - orginalscale2 + 11));
-        Unitcircle1.localScale = new Vector3(orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11, orginalscale2 / (float)scale + 11);
 
         if (!matrix.matrixMode)
         {

@@ -11,10 +11,8 @@ public class Funcs : MonoBehaviour
     public static double dx = 0.00000001;
     public static int integrationResolution = 1000;
     public Transform starti;
-
-    static bool actualintegral = false;
     
-    static Complex integrationstart;
+    static Complex integrationStart;
 
     public static Matrix matrix;
 
@@ -24,24 +22,23 @@ public class Funcs : MonoBehaviour
     }
     private void Update()
     {
-        integrationstart = new Complex(starti.position.x, starti.position.y);
+        integrationStart = new Complex(starti.position.x, starti.position.y);
     }
 
     public static Complex function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
-        Complex output;
 
-        if (!matrix.matrixMode)
-        {
-            output = Complex.FromPolarCoordinates(z.Real, z.Imaginary);
-        }
-        else
+        //Change the right side of this assignment to your desired function using "z" as your variable
+        //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
+        Complex output = z * z;
+
+        if (matrix.matrixMode)
         {
             output = matrix.Transform(z);
         }
 
-        return (output / Scaler.scale);
+        return output / Scaler.scale;
     }
 
     public static Complex Derivative(Complex z)
@@ -56,57 +53,34 @@ public class Funcs : MonoBehaviour
         return new Complex(df_dx, df_dy) / Scaler.scale;
     }
 
-    public static Complex RiemannSum(Complex end)
+    public static Complex RiemannSum(Complex endPoint)
     {
-        Complex startpoint = integrationstart;
-        Complex endpoint = Complex.Zero;
-        Complex antiresult = Complex.Zero;
+        Complex antiResult = Complex.Zero;
 
-        if (actualintegral)
-        {
-            if (end.Real > 0)
-            {
-                endpoint = end;
-            }
-            else if (end.Real < 0)
-            {
-                startpoint = end;
-            }
-            else
-            {
-                return Complex.Zero;
-            }
-        }
-        else
-        {
-            endpoint = end;
-        }
-
-        Complex deltaZ = (endpoint - startpoint) / integrationResolution;
+        Complex deltaZ = (endPoint - integrationStart) / integrationResolution;
 
         for (int i = 0; i < integrationResolution; i++)
         {
-            Complex z = startpoint + deltaZ * i;
+            Complex z = integrationStart + deltaZ * i;
             Complex f_z = function(z);
-            antiresult += f_z * deltaZ;
+            antiResult += f_z * deltaZ;
         }
-        return (antiresult * Scaler.scale);
+        return (antiResult * Scaler.scale);
     }
 
     public static Complex SimpsonsRule(Complex end)
     {
-        Complex start = integrationstart;
-        Complex h = (end - start) / integrationResolution;
-        Complex result = function(start) + function(end);
+        Complex h = (end - integrationStart) / integrationResolution;
+        Complex result = function(integrationStart) + function(end);
 
         for (int i = 1; i < integrationResolution; i += 2)
         {
-            result += 4 * function(start + i * h);
+            result += 4 * function(integrationStart + i * h);
         }
 
         for (int i = 2; i < integrationResolution - 1; i += 2)
         {
-            result += 2 * function(start + i * h);
+            result += 2 * function(integrationStart + i * h);
         }
 
         return (result * h / 3.0) * Scaler.scale;
