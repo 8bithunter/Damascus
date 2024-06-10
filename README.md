@@ -30,7 +30,7 @@ Open the "Funcs" file in the "Scripts" folder under "Assets" with a code editor.
 Inside the "Damascus" scene, the game object named "Code" contains all the settings currently implemented. These settings include toggling the derivative and integral calculations, and calibrating the function mapping capability.
 
 ### Mapping Functions
-Damascus allows the mapping of functions along the complex plane. By default, Damascus converts the output of a function into a color based on the HSV color format. The conversion uses the argument (degrees in standard position) of the output, and converts that to a hue. Pure red is at 0°, pure green is at 120°, and pure blue is 240°. The saturation of the color is based on the magnitude of the output. Lastly, zeros are displayed with black, the blacker it is, the closer it is to zero. If you toggle RGB, you instead choose costume colors for a high real and imaginary value, plus a color for proximity to zero.
+Damascus allows the mapping of functions along the complex plane. By default, Damascus converts the output of a function into a color based on the HSV color format. The conversion uses the argument (degrees in standard position) of the output, and converts that to a hue. Pure red is at 0°, pure green is at 120°, and pure blue is 240°. The saturation of the color is based on the magnitude of the output. Lastly, zeros are displayed with black, the blacker it is, the closer it is to zero. If you toggle RGB, you instead choose custom colors for a high real and imaginary value, plus a color for proximity to zero.
 
 ### Controls
 <strong>Left Click:</strong> Left clicking smoothly brings the input selector to the position of your mouse.
