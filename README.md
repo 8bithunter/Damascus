@@ -24,7 +24,7 @@ Step 4: That's it! Just run the program, and you are good to go!
 Once the program is open in the Unity editor, select the "Damascus" scene in the "Scenes" folder under "Assets". Then click the play button at the top of the editor, and the program will run.
 
 ### Choosing a Function
-Open the "Funcs" file in the "Scripts" folder under "Assets" with a code editor. Inside "Funcs", there is a method named "Function", which contains the assignment you will change. Below the commented lines, there is an assignment that looks like "Complex output = (function)". Simply change "(function)" to whatever function you want to graph. Most functions can be found in the "Complex" class, but any arithmetic operator will work too. If the "Complex" class does not contain your desired function, feel free to program it yourself!
+Open the "Funcs" file in the "Scripts" folder under "Assets" with a code editor. Inside "Funcs", there is a method named "Function", which contains the assignment you will change. Below the commented lines, there is an assignment that looks like "Complex output = (function)". Simply change "(function)" to whatever function you want to graph, using "z" as the input variable. Most functions can be found in the "Complex" class, but any arithmetic operator will work too. If the "Complex" class does not contain your desired function, feel free to program it yourself!
 
 ### Customization 
 Inside the "Damascus" scene, the game object named "Code" contains all the settings currently implemented. These settings include toggling the derivative and integral calculations, and calibrating the function mapping capability.
@@ -36,6 +36,8 @@ Damascus allows the mapping of functions along the complex plane. By default, Da
 <strong>Left Click:</strong> Left clicking smoothly brings the input selector to the position of your mouse.
 
 <strong>Arrow Keys:</strong> Clicking any arrow key will move the input selector 0.001 units in its corresponding direction.
+
+<strong>Scroll Wheel:</strong> Scrolling will zoom in or out, adjusting the scale of the input and output space.
 
 <strong>Ctrl:</strong> Holding ctrl while pressing the arrow keys will cause the input selector to smoothly move in the arrow key's corresponding direction.
 
