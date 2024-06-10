@@ -85,7 +85,7 @@ public class HeatMap : MonoBehaviour
     {
         if (derivativeHeatMap) return Funcs.Derivative(value);
         else if (integralHeatMap) return Funcs.SimpsonsRule(value);
-        else return Funcs.function(value);    
+        else return Funcs.Function(value);    
     }
     public void CreateHeatMap()
     {

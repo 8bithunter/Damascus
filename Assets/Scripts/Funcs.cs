@@ -25,11 +25,11 @@ public class Funcs : MonoBehaviour
         integrationStart = new Complex(starti.position.x, starti.position.y);
     }
 
-    public static Complex function(Complex unscaledz)
+    public static Complex Function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
 
-        //Change the right side of this assignment to your desired function using "z" as your variable
+        //Change the right side of the following assignment to your desired function using "z" as your variable
         //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
         Complex output = Complex.Sin(z) - 2;
 
@@ -43,9 +43,9 @@ public class Funcs : MonoBehaviour
 
     public static Complex Derivative(Complex z)
     {
-        Complex fz = function(z);
-        Complex fz_plus_h = function(z + dx);
-        Complex fz_minus_h = function(z - dx);
+        Complex fz = Function(z);
+        Complex fz_plus_h = Function(z + dx);
+        Complex fz_minus_h = Function(z - dx);
 
         double df_dx = (fz_plus_h.Real - fz_minus_h.Real) / (2 * dx);
         double df_dy = (fz_plus_h.Imaginary - fz_minus_h.Imaginary) / (2 * dx);
@@ -62,7 +62,7 @@ public class Funcs : MonoBehaviour
         for (int i = 0; i < integrationResolution; i++)
         {
             Complex z = integrationStart + deltaZ * i;
-            Complex f_z = function(z);
+            Complex f_z = Function(z);
             antiResult += f_z * deltaZ;
         }
         return (antiResult * Scaler.scale);
@@ -71,16 +71,16 @@ public class Funcs : MonoBehaviour
     public static Complex SimpsonsRule(Complex end)
     {
         Complex h = (end - integrationStart) / integrationResolution;
-        Complex result = function(integrationStart) + function(end);
+        Complex result = Function(integrationStart) + Function(end);
 
         for (int i = 1; i < integrationResolution; i += 2)
         {
-            result += 4 * function(integrationStart + i * h);
+            result += 4 * Function(integrationStart + i * h);
         }
 
         for (int i = 2; i < integrationResolution - 1; i += 2)
         {
-            result += 2 * function(integrationStart + i * h);
+            result += 2 * Function(integrationStart + i * h);
         }
 
         return (result * h / 3.0) * Scaler.scale;

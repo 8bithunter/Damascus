@@ -36,7 +36,7 @@ public class Outputter : MonoBehaviour
     {
 
         Complex complexNumber = new Complex(input.position.x, input.position.y);
-        Complex result = Funcs.function(complexNumber);
+        Complex result = Funcs.Function(complexNumber);
         Complex derivative = new Complex(threshold - 1, threshold - 1);
         Complex antiderivative = new Complex(threshold - 1, threshold - 1);
         Complex startinumber = new Complex(starti.position.x, starti.position.y);
