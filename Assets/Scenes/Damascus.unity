@@ -1641,8 +1641,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threshold: 1000
-  doderivative: 0
-  dointegral: 0
+  doderivative: 1
+  dointegral: 1
   input: {fileID: 692663411}
   output: {fileID: 272705412}
   outputd: {fileID: 335685693}
@@ -2264,7 +2264,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0b615b049554224b9c32c03f1f250e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 170eccddd35c6b74084a92a155331595, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
