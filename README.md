@@ -45,6 +45,8 @@ Damascus allows the mapping of functions along the complex plane. By default, Da
 
 <strong>Alt:</strong> Holding alt will lock the input selector to the unit circle.
 
+<strong>Enter:</strong> Clicking enter will reset the scale to 1, and return the input selector to the origin.
+
 <strong>X:</strong> While holding x, type in any real coordinate you want your input selector to land on, once you are done typing, release x and the input selector will move to the desired real coordinate.
 
 <strong>Y:</strong> While holding y, type in any imaginary coordinate (don't add "i" at any point) you want your input selector to land on, once you are done typing, release y and the input selector will move to the desired imaginary co-ordinate.
