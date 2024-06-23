@@ -25,6 +25,7 @@ Once the program is open in the Unity editor, select the "Damascus" scene in the
 
 ### Choosing a Function
 Open the "Funcs" file in the "Scripts" folder under "Assets" with a code editor (I use Visual Studio). Inside "Funcs", there is a method named "Function", which contains the assignment you will change. Below the commented lines, there is an assignment that looks like "Complex output = (function)". Simply change "(function)" to whatever function you want to graph, using "z" as the input variable. Most functions can be found in the "Complex" class, but any arithmetic operator will work too. If the "Complex" class does not contain your desired function, feel free to program it yourself!
+A tutorial is avalible here: https://www.youtube.com/watch?v=oCwgYL-QqKc
 
 ### Customization 
 Inside the "Damascus" scene, the game object named "Code" contains all the settings currently implemented. These settings include toggling the derivative and integral calculations, and calibrating the function mapping capability.
