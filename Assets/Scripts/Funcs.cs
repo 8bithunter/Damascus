@@ -31,7 +31,7 @@ public class Funcs : MonoBehaviour
 
         //Change the right side of the following assignment to your desired function using "z" as your variable
         //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
-        Complex output = Complex.Sin(z) - 2;
+        Complex output = Mandelbrot(z);
 
         if (matrix.matrixMode)
         {

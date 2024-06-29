@@ -31,6 +31,8 @@ public class HeatMap : MonoBehaviour
     private double HighImag = double.MinValue;
     private double HighMag = double.MinValue;
 
+    private double previousScale;
+
     public int zeroColorPower = 25;
 
     public bool HSVZeroWhite = false;
@@ -48,8 +50,10 @@ public class HeatMap : MonoBehaviour
         spriteObjects = new GameObject[(int)Math.Round(screenLength / squareSize) * 2 + 1, (int)Math.Round(screenHeight / squareSize) * 2 + 1];
         CreateHeatMap();
         UpdateHeatMap();
+
+        previousScale = Scaler.scale;
     }
-    private long frameCount = 0;
+
     private void Update()
     {
         if (squareSize <= 0) squareSize = 0.1f;
@@ -65,13 +69,12 @@ public class HeatMap : MonoBehaviour
             heatMapGone = true;
         }
 
-        if (doHeatMap)
+        if (doHeatMap && (previousScale != Scaler.scale))
         {
-            frameCount++;
-
-            if (frameCount % 10 == 0)
-                UpdateHeatMap();
+            UpdateHeatMap(); 
         }
+
+        previousScale = Scaler.scale;
 
         if (doHeatMap && Input.GetKeyDown(KeyCode.R))
         {
