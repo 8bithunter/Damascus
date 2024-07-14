@@ -28,15 +28,16 @@ public class Funcs : MonoBehaviour
     public static Complex Function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
-
-        //Change the right side of the following assignment to your desired function using "z" as your variable
-        //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
-        Complex output = Mandelbrot(z);
+        Complex output;
 
         if (matrix.matrixMode)
         {
             output = matrix.Transform(z);
-        }
+        } else
+
+        //Change the right side of the following assignment to your desired function using "z" as your variable
+        //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
+        output = Mandelbrot(z);
 
         return output / Scaler.scale;
     }

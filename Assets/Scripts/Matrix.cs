@@ -6,6 +6,7 @@ using UnityEngine;
 public class Matrix : MonoBehaviour
 {
     public bool matrixMode = false;
+    //public bool eigenValueV = false;
 
     public double[] î = new double[2] {1,
                                        0};

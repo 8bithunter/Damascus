@@ -45,8 +45,12 @@ public class HeatMap : MonoBehaviour
 
     private GameObject[,] spriteObjects;
 
+    public static Matrix matrix;
+
     void Start()
     {
+        matrix = GetComponent<Matrix>();
+
         spriteObjects = new GameObject[(int)Math.Round(screenLength / squareSize) * 2 + 1, (int)Math.Round(screenHeight / squareSize) * 2 + 1];
         CreateHeatMap();
         UpdateHeatMap();
@@ -69,7 +73,7 @@ public class HeatMap : MonoBehaviour
             heatMapGone = true;
         }
 
-        if (doHeatMap && (previousScale != Scaler.scale))
+        if (doHeatMap && previousScale != Scaler.scale)
         {
             UpdateHeatMap(); 
         }
@@ -134,6 +138,7 @@ public class HeatMap : MonoBehaviour
             {
                 for (int y = 0; y < (int)Math.Round(screenHeight / tempSquareSize) * 2 + 1; y++)
                 {
+                   
                     GameObject spriteObject = spriteObjects[x, y];
 
                     SpriteRenderer spriteRenderer = spriteObject.GetComponent<SpriteRenderer>();
@@ -141,6 +146,14 @@ public class HeatMap : MonoBehaviour
                     Complex functionOutput = HeatMapFunction(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y));
 
                     Color color = ComplexToColor(functionOutput);
+
+                    /*if (matrix.matrixMode && matrix.eigenValueV)
+                    {
+                        if (Complex.Abs(new Complex(spriteObject.transform.position.x, spriteObject.transform.position.y).Phase - functionOutput.Phase) < 0.1)
+                        {
+                            color = Color.gray;
+                        }
+                    }*/
 
                     spriteRenderer.color = color;
                 }
