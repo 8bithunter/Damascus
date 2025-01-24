@@ -35,14 +35,14 @@ public class Funcs : MonoBehaviour
             output = matrix.Transform(z);
         } else
 
-        //Change the right side of the following assignment to your desired function using "z" as your variable
-        //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
-        output = Mandelbrot(z);
+            //Change the right side of the following assignment to your desired function using "z" as your variable
+            //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
+            output = ((CreateSymmetry(z, integrationStart * Scaler.scale)));
 
         return output / Scaler.scale;
     }
 
-    public static Complex Derivative(Complex z)
+    /*public static Complex Derivative(Complex z)
     {
         Complex fz = Function(z);
         Complex fz_plus_h = Function(z + dx);
@@ -52,7 +52,18 @@ public class Funcs : MonoBehaviour
         double df_dy = (fz_plus_h.Imaginary - fz_minus_h.Imaginary) / (2 * dx);
 
         return new Complex(df_dx, df_dy) / Scaler.scale;
+    }*/
+
+    public static Complex Derivative(Complex z)
+    {
+        Complex fz_plus_h = Function(z + new Complex(dx, 0));
+        Complex fz_minus_h = Function(z - new Complex(dx, 0));
+
+        return ((fz_plus_h - fz_minus_h) / (2 * dx)) / Scaler.scale;
     }
+
+
+
 
     public static Complex RiemannSum(Complex endPoint)
     {
@@ -157,6 +168,11 @@ public class Funcs : MonoBehaviour
         }
 
         return w;
+    }
+
+    public static Complex CreateSymmetry(Complex z, Complex symmetryNumber)
+    {
+        return (Complex.Pow(z, symmetryNumber)) / Complex.Abs(Complex.Pow(z, symmetryNumber - 1));
     }
 }
 
