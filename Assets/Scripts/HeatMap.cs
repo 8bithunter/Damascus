@@ -32,10 +32,7 @@ public class HeatMap : MonoBehaviour
     private double HighMag = double.MinValue;
 
     private double previousScale;
-<<<<<<< HEAD
     private double previousTime;
-=======
->>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 
     public int zeroColorPower = 25;
 
@@ -50,28 +47,19 @@ public class HeatMap : MonoBehaviour
     private GameObject[,] spriteObjects;
 
     public static Matrix matrix;
-<<<<<<< HEAD
     public static Physics physics;
-=======
->>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 
     void Start()
     {
         matrix = GetComponent<Matrix>();
-<<<<<<< HEAD
         physics = GetComponent<Physics>();
-=======
->>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 
         spriteObjects = new GameObject[(int)Math.Round(screenLength / squareSize) * 2 + 1, (int)Math.Round(screenHeight / squareSize) * 2 + 1];
         CreateHeatMap();
         UpdateHeatMap();
 
         previousScale = Scaler.scale;
-<<<<<<< HEAD
         previousTime = physics.time;
-=======
->>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
     }
 
     private void Update()
@@ -94,7 +82,6 @@ public class HeatMap : MonoBehaviour
             UpdateHeatMap(); 
         }
 
-<<<<<<< HEAD
         if (doHeatMap && previousTime != physics.time)
         {
             UpdateHeatMap();
@@ -102,9 +89,6 @@ public class HeatMap : MonoBehaviour
 
         previousScale = Scaler.scale;
         previousTime = physics.time;
-=======
-        previousScale = Scaler.scale;
->>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 
         if (doHeatMap && Input.GetKeyDown(KeyCode.R))
         {

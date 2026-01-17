@@ -1583,6 +1583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1107804549}
   - component: {fileID: 1107804554}
+  - component: {fileID: 1107804556}
   - component: {fileID: 1107804555}
   - component: {fileID: 1107804550}
   - component: {fileID: 1107804548}
@@ -1742,6 +1743,33 @@ MonoBehaviour:
   "\u0135":
   - 0
   - 1
+--- !u!114 &1107804556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107804547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8fe20f4c63f9041a14ef87cda0edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicMode: 1
+  time: 0
+  modulusSquared: 0
+  phaseChirp: 0
+  chirpAlpha: 0
+  chirpRate: 0
+  simGridSize: 256
+  simDomainSize: 2.59
+  simDt: 0.002
+  simStepsPerUpdate: 1
+  potentialTexture: {fileID: 0}
+  potentialScale: 10
+  useAbsorbingBoundary: 1
+  absorberStrength: 20
+  absorberWidth: 16
 --- !u!1 &1217521754
 GameObject:
   m_ObjectHideFlags: 0
