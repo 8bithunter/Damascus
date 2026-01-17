@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿using System.Collections;
+=======
+using System.Collections;
+>>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
@@ -11,6 +15,7 @@ public class Funcs : MonoBehaviour
     public static double dx = 0.00000001;
     public static int integrationResolution = 1000;
     public Transform starti;
+<<<<<<< HEAD
 
     static Complex integrationStart;
 
@@ -27,15 +32,25 @@ public class Funcs : MonoBehaviour
     public static double uncertaintyInterval = 0.5;  // seconds between diagnostic logs
     private static double lastUncertaintyTime = -1e9;
 
+=======
+    
+    static Complex integrationStart;
+
+    public static Matrix matrix;
+>>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 
     public void Start()
     {
         matrix = GetComponent<Matrix>();
+<<<<<<< HEAD
         physics = GetComponent<Physics>();
+=======
+>>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
     }
     private void Update()
     {
         integrationStart = new Complex(starti.position.x, starti.position.y);
+<<<<<<< HEAD
 
         // run diagnostics periodically while physics mode is active
         if (physics != null && physics.physicMode)
@@ -46,12 +61,15 @@ public class Funcs : MonoBehaviour
                 lastUncertaintyTime = Time.time;
             }
         }
+=======
+>>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
     }
 
     public static Complex Function(Complex unscaledz)
     {
         Complex z = unscaledz * Scaler.scale;
         Complex output;
+<<<<<<< HEAD
         if (physics != null && physics.physicMode)
         {
             // Moving 2D Gaussian wavepacket: known position at t=0, speed uncertain.
@@ -121,6 +139,17 @@ public class Funcs : MonoBehaviour
             //Change the right side of the following assignment to your desired function using "z" as your variable
             //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
             output = Mandelbrot(z);
+=======
+
+        if (matrix.matrixMode)
+        {
+            output = matrix.Transform(z);
+        } else
+
+            //Change the right side of the following assignment to your desired function using "z" as your variable
+            //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
+            output = ((CreateSymmetry(z, integrationStart * Scaler.scale)));
+>>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 
         return output / Scaler.scale;
     }
@@ -257,6 +286,7 @@ public class Funcs : MonoBehaviour
     {
         return (Complex.Pow(z, symmetryNumber)) / Complex.Abs(Complex.Pow(z, symmetryNumber - 1));
     }
+<<<<<<< HEAD
 
     public static void ComputeAndLogUncertainties(double t)
     {
@@ -418,5 +448,7 @@ public class Funcs : MonoBehaviour
         }
         return psi;
     }
+=======
+>>>>>>> 5fd94565c1795ffec6ffa637e7720c8db8cd2c7b
 }
 
