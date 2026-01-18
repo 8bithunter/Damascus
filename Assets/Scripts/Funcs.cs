@@ -44,7 +44,7 @@ public class Funcs : MonoBehaviour
         { 
             //Change the right side of the following assignment to your desired function using "z" as your variable
             //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
-            output = Mandelbrot(z);
+            output = Complex.Pow(z,5) + 1;
         }
 
         return output / Scaler.scale;
@@ -69,8 +69,6 @@ public class Funcs : MonoBehaviour
 
         return ((fz_plus_h - fz_minus_h) / (2 * dx)) / Scaler.scale;
     }
-
-
 
 
     public static Complex RiemannSum(Complex endPoint)
