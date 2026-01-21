@@ -19,8 +19,13 @@ public class Physics : MonoBehaviour
     // ----- physical / diagnostic defaults (kept accessible) -----
     public static double phys_m = 1.0;               // mass
     public static double phys_sigma0 = 0.25;        // initial width (position uncertainty at t=0)
-    public static double phys_x0 = 0.0, phys_y0 = 0.0; // initial center at t=0 (world units)
-    public static double phys_kx0 = 1.0, phys_ky0 = 1.0; // mean wavevector (momentum)
+
+    [Header("Initial Conditions")]
+    public double phys_x0 = 0.0;
+    public double phys_y0 = 0.0; // initial center at t=0 (world units)
+    public double phys_kx0 = 1.0;
+    public double phys_ky0 = 1.0; // mean wavevector (momentum)
+
     public static int uncertaintyGrid = 81;          // grid resolution used for diagnostics (odd recommended)
     public static double uncertaintyRangeFactor = 6.0; // range = factor * sigma(t)
     public static double uncertaintyInterval = 0.5;  // seconds between diagnostic logs
