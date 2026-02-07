@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
@@ -44,7 +44,7 @@ public class Funcs : MonoBehaviour
         { 
             //Change the right side of the following assignment to your desired function using "z" as your variable
             //eg. Complex output = Complex.Sin(z) + Complex.Pow(z, 3) + z;
-            output = Complex.Pow(z,5) + 1;
+            output = Zeta(z);
         }
 
         return output / Scaler.scale;
@@ -113,24 +113,69 @@ public class Funcs : MonoBehaviour
         }
         return output;
     }
-
-    public static Complex Zeta(Complex z)
+    public static Complex Zeta(Complex s)
     {
-        if (z.Real >= 0.5)
+        const double eps = 1e-12;
+        int N = 400;
+
+        // ---------- helpers ----------
+        Complex ZetaDirichlet(Complex z)
         {
-            Complex output = Complex.Zero;
-            for (int i = 1; i < 1000; i++)
+            Complex sum = Complex.Zero;
+            for (int n = 1; n <= N; n++)
+                sum += Complex.Pow(n, -z);
+
+            // crude Euler–Maclaurin tail correction
+            Complex nN = new Complex(N, 0);
+            sum += Complex.Pow(nN, 1 - z) / (z - 1);
+            sum += 0.5 * Complex.Pow(nN, -z);
+            return sum;
+        }
+
+        Complex ZetaEta(Complex z)
+        {
+            Complex sum = Complex.Zero;
+            for (int n = 1; n <= N; n++)
             {
-                output = output + 1 / Complex.Pow(i, z);
+                double sign = (n & 1) == 1 ? 1.0 : -1.0;
+                sum += sign * Complex.Pow(n, -z);
             }
-            return output;
+            return sum;
         }
-        else
+
+        // ---------- special values ----------
+        if (s == Complex.Zero) return new Complex(-0.5, 0);
+        if (s == Complex.One) return new Complex(double.PositiveInfinity, 0);
+
+        // ---------- Re(s) > 1 ----------
+        if (s.Real > 1 + eps)
+            return ZetaDirichlet(s);
+
+        // ---------- 0 < Re(s) ≤ 1 ----------
+        if (s.Real > eps)
         {
-            Complex output = Complex.Pow(2, z) * Complex.Pow(Math.PI, z - 1);
-            return (output * Complex.Sin((Math.PI * z) / 2) * Gamma(1 - z) * Zeta(1 - z));
+            Complex eta = ZetaEta(s);
+            Complex denom = Complex.One - Complex.Pow(2, 1 - s);
+
+            if (Complex.Abs(denom) < 1e-10)
+                throw new ArithmeticException("ζ(s) unstable near pole/zero of continuation");
+
+            return eta / denom;
         }
+
+        // ---------- Re(s) ≤ 0 : functional equation ----------
+        Complex factor =
+            Complex.Pow(2, s) *
+            Complex.Pow(Math.PI, s - 1) *
+            Complex.Sin(Math.PI * s / 2) *
+            Gamma(1 - s);
+
+        Complex t = Complex.One - s;
+
+        // t now has Re(t) ≥ 1
+        return factor * Zeta(t);
     }
+
 
     static int g = 7;
     static double[] p = {0.99999999999980993, 676.5203681218851, -1259.1392167224028,
